@@ -1,0 +1,9 @@
+{% extends 'crawler/base.html' %}
+
+{% block content %}
+    <h1>New news</h1>
+    <form method = "POST" class="post-form">{% csrf_token %}  <!-- method="POST" 가 폼필드를  request.POST에 넣는다는 뜻 -->
+        {{ form.as_p }}
+        <button type="submit" class="sace btn btn-default">Save</button>
+    </form>
+{% endblock %}

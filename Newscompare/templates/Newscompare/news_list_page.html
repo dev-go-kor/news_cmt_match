@@ -1,0 +1,16 @@
+{% extends 'Newscompare/base.html' %}
+
+{% block content %}
+    {% for news in news_list %}
+        <div>
+            <p><a href="{% url 'news_page' pk=news.pk %}">{{ news.pk }} : {{ news.title }} ({{ news.section }}, {{ news.press }})
+                [ {{ news.collect_cmt_naver }}, {{ news.collect_cmt_daum }}, {{ news.analyzed }}, {{ news.date }}]</a></p>
+            <!-- url 생성 테크, ''에는 urls에 정의한 name
+            이를 바탕으로 url 생성, r'^post/(?P<pk>\d+)/$ 규칙에 의해 생성 되는데,
+            pk인자가 news.pk 의 값을 취함 -->
+            <br>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+

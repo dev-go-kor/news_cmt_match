@@ -1,0 +1,18 @@
+{% extends 'Newscompare/base.html' %}
+
+{% block content %}
+        <div>
+            <!-- view 에서 news 이미 넘겨움-->
+            <h1>Title : {{ news.title }} ({{ news.section }}, {{ news.press }}) [{{ news.date }}]</h1>
+            <P></P>
+            {% for content in newsanalyze %}
+            <h2>{{content.portal}}:{{content.rep_cmt}}</h2>
+            <p>{{content.portal}}:{{content.word_cloud.url}}</p>
+            <img src="{{ content.word_cloud.url }}">
+            {% endfor %}
+            <p><a href="{{ news.url_naver }}" target="_blank">NAVER : {{ news.url_naver }}</a></p>
+            <p><a href="{{ news.url_daum }}" target="_blank">DAUM : {{ news.url_daum }}</a></p>
+            <iframe src="{{ news.url_naver }}" width="100%" height="100%"></iframe>
+            <iframe src="{{ news.url_daum }}" width="100%" height="100%"></iframe>
+        </div>
+{% endblock %}
