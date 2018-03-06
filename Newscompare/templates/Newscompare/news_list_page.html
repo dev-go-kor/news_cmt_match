@@ -2,14 +2,27 @@
 
 {% block content %}
     {% for news in news_list %}
-        <div>
-            <p><a href="{% url 'news_page' pk=news.pk %}">{{ news.pk }} : {{ news.title }} ({{ news.section }}, {{ news.press }})
-                [ {{ news.collect_cmt_naver }}, {{ news.collect_cmt_daum }}, {{ news.analyzed }}, {{ news.date }}]</a></p>
-            <!-- url 생성 테크, ''에는 urls에 정의한 name
-            이를 바탕으로 url 생성, r'^post/(?P<pk>\d+)/$ 규칙에 의해 생성 되는데,
-            pk인자가 news.pk 의 값을 취함 -->
-            <br>
+    <div class="col s12 m6 l4">
+        <div class="card">
+            <div class="card-image">
+                <img src="">
+                <span class="card-title">{{ news.title }}</span>
+            </div>
+            <div class="card-content">
+                <p>네이버 : 내용 나올 예정</p>
+                <p>다  음 : 내용 나올 예정</p>
+                <p><a href="{% url 'news_page' pk=news.pk %}">{{ news.pk }} : {{ news.title }} ({{ news.section }}, {{ news.press }})
+                    [ {{ news.collect_cmt_naver }}, {{ news.collect_cmt_daum }}, {{ news.analyzed }}, {{ news.date }}]</a></p>
+                <!-- url 생성 테크, ''에는 urls에 정의한 name
+                이를 바탕으로 url 생성, r'^post/(?P<pk>\d+)/$ 규칙에 의해 생성 되는데,
+                pk인자가 news.pk 의 값을 취함 -->
+            </div>
+            <div class="card-action">
+                <a href="#">네이버 뉴스</a>
+                <a href="#">다음 뉴스</a>
+            </div>
         </div>
+    </div>
     {% endfor %}
 {% endblock %}
 

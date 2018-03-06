@@ -1,23 +1,32 @@
 {% load staticfiles %}
 <html>
     <head>
-        <title>News blog</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'css/crawler.css' %}">
+        <title>News Analyzer</title>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--Import materialize.css-->
+        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.4/css/materialize.min.css" media="screen,projection"/>
     </head>
     <body>
-        <div class="page-header">
-            <h1><a href="/">Naver News analyser</a></h1>
-        </div>
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-10">
+
+            <div class="navbar-fixed">
+                <nav class="purple lighten-3">
+                    <div class="nav-wrapper">
+                        <a href="#!" class="brand-logo">News Analyzer</a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href=""><i class="material-icons">search</i></a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="container">
+                <div class="row">
                     {% block content %}
                     {% endblock %}
                 </div>
             </div>
-        </div>
+        <!--Import .js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     </body>
 </html>
