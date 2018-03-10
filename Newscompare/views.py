@@ -8,6 +8,7 @@ from .tasks import get_comment_celery, cmt_wordcloud_celery, rep_sentences_celer
 
 def news_list_page(request):
     news_list = News_list.objects.order_by('-id').all()
+    #news_analyze_list = News_list.news_analyze_set.all
     #리스트 볼때마다 기사들 댓글, 분석상태 점검 필요??? 너무과한가?
     return render(request, 'Newscompare/news_list_page.html', {'news_list': news_list})
 
