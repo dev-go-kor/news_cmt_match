@@ -26,7 +26,6 @@ def calculate_bias(cmt_set):
 
 def make_rep_sentence(cmt_set):
     # 대표문장 만들기 3개
-    rep_sentences = []
     print(cmt_set)
     nlp = Twitter()
     nouns = nlp.nouns(cmt_set)
@@ -40,7 +39,7 @@ def make_rep_sentence(cmt_set):
 
 
     print("top morps choosen : ", top_morphs)
-    rep_sentences.append(generate_sentence(cfd, top_morphs))
+    rep_sentences = generate_sentence(cfd, top_morphs)
 
     print(rep_sentences)
     return rep_sentences

@@ -71,7 +71,7 @@ def get_comment(url):
             try:
                 driver.find_element_by_xpath("//a[@data-log='RPC.more']").click()
                 print('clicked')
-                time.sleep(1)
+                time.sleep(2)
             except:
                 click_more = False
 
@@ -159,7 +159,7 @@ def get_comment(url):
             try:
                 driver.find_element_by_xpath("//a[contains(@class,'link_fold') and contains(@class,'#more')]").click()
                 print('clicked')
-                time.sleep(1)
+                time.sleep(2)
             except:
                 click_more = False
 

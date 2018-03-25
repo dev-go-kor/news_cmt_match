@@ -1,1 +1,1 @@
-/etc/init.d/nginx start & uwsgi --socket /tmp/mysite.sock --module mywebapp.wsgi --chmod-socket=666
+rabbitmq-server & /etc/init.d/nginx start & uwsgi --socket /tmp/mysite.sock --module mywebapp.wsgi --chmod-socket=666 & rm celerybeat.pid & celery -A mywebapp worker -l info & celery -A mywebapp beat -l info -S django &

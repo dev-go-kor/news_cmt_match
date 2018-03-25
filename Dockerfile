@@ -36,13 +36,14 @@ RUN rm -rf /etc/nginx/sites-enabled/default
 COPY mysite_nginx.conf /etc/nginx/sites-enabled/mysite_nginx.conf
 COPY requirements.txt /mysite/
 
-# COPY . /mysite/
-VOLUME /mysite/
+COPY . /mysite/
+#VOLUME /mysite/
 WORKDIR /mysite/
 
 RUN pip3 install -r requirements.txt
 
-# RUN chmod +x /mysite/docker_start.sh # give permission
-# CMD /mysite/docker_start.sh
+RUN chmod +x /mysite/docker_start.sh
+CMD /mysite/docker_start.sh && tail -f /dev/null
 
 EXPOSE 80
+

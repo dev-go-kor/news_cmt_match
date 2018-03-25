@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'nc^7-r9pqv^984q=q^i6%qyld4(saiqy=sqe!eb=!2ikhpnb-#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -83,19 +83,6 @@ DATABASES = {
     }
 }
 
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '35.197.82.177',
-        'PORT': '3306',
-        'NAME': 'ranking_news',
-        'USER': 'root',
-        'PASSWORD': 'rh3003',
-    }
-}
-"""
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -127,7 +114,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -139,5 +126,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # os.path.join means join path i
 MEDIA_URL = '/media/' # field assume mediafile served after /media/, so save url after /media/
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # save file on here
 
-
 CELERY_RESULT_BACKEND = 'django-db' # django-celery-results, setting
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 3000

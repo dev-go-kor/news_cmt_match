@@ -12,6 +12,8 @@ class News_list(models.Model):
     url_daum = models.URLField()
     thumbnail = models.URLField(blank=True) # char type field can use black=True, it store ''
     date = models.DateField()
+    count_cmt_naver = models.IntegerField(blank=True, null=True)
+    count_cmt_daum = models.IntegerField(blank=True, null=True)
     collect_cmt_naver = models.BooleanField(default=False)
     collect_cmt_daum = models.BooleanField(default=False)
     analyzed = models.BooleanField(default=False)

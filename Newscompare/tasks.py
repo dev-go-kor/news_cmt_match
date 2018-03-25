@@ -3,6 +3,7 @@ from celery import shared_task
 from .cmt_crawler import get_comment
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
+import time
 from .models import News_list, News_analyze ,Comment_buffer
 from .cmt_analyzer import make_wordcloud, make_rep_sentence
 """
@@ -18,6 +19,36 @@ def operate_get_rangking_news():
         form.save()
 """
 @shared_task
+def periodic_analyze():
+    news_list = News_list.objects.all()
+    for news in news_list:
+        if news.analyzed == False:
+            time.sleep(1)
+            do_analyze.delay(pk=news.pk) # 실행시키면 왜 1,2,3~7로 바로가지? 4,5,6은?
+            print("news No. {} analyzing".format(news.pk))
+        else:
+            print("news No. {} analyzed".format(news.pk))
+    return "cycle done."
+
+@shared_task
+def do_analyze(pk):
+     # 이미 news_list 가 호출되서 또 호출하면 동작 안하는듯 하다.
+                                               # 어짜피 밇어 넣을꺼 분석 끝나고 열면 될듯
+    try:
+        get_comment_celery(pk=pk)
+        cmt_wordcloud_celery(pk=pk)
+        rep_sentences_celery(pk=pk)
+        news = get_object_or_404(News_list, pk=pk)
+        news.analyzed = True # delay 로 할경우 worker에 넣어버리고 바로 돌아옴, 따라서 잘되든 못되는 본 줄이 실행됨
+        news.save()
+        print('analyzed')
+    except:
+        print('analyzing failed')
+
+    return print('analyze finished.')
+
+
+@shared_task
 def get_comment_celery(pk):
     news = get_object_or_404(News_list, pk=pk)
     if news.collect_cmt_naver == False:
@@ -30,6 +61,7 @@ def get_comment_celery(pk):
                                    cmt_unrecom=int(cmts.iloc[row]['unrecommend']), press=cmts.iloc[row]['press'])
                 form_cmt.save()
             news.collect_cmt_naver = True
+            news.count_cmt_naver = len(cmts)
             news.save()
             print('naver done')
         except:
@@ -45,11 +77,12 @@ def get_comment_celery(pk):
                                    cmt_unrecom=int(cmts.iloc[row]['unrecommend']), press=cmts.iloc[row]['press'])
                 form_cmt.save()
             news.collect_cmt_daum = True
+            news.count_cmt_daum = len(cmts)
             news.save()
             print('daum done')
         except:
             print('daum failed')
-    return 'get_comment_celery done.'
+    return print('get_comment_celery done.')
 
 @shared_task
 def cmt_wordcloud_celery(pk):
@@ -94,7 +127,7 @@ def cmt_wordcloud_celery(pk):
         form_daum_analyze = News_analyze(news=news, portal='Daum', word_cloud=worldcloud_daum)
     form_daum_analyze.save()
 
-    return 'cmt_wordcloud_celery done.'
+    return print('cmt_wordcloud_celery done.')
 
 @shared_task
 def rep_sentences_celery(pk):
@@ -125,6 +158,7 @@ def rep_sentences_celery(pk):
     #else:
     except:
         form_naver_analyze = News_analyze(news=news, portal='Naver', rep_cmt=rep_naver)
+
     form_naver_analyze.save()
 
     try:
@@ -134,10 +168,11 @@ def rep_sentences_celery(pk):
         form_daum_analyze.rep_cmt = rep_daum
     #else:
     except:
-        form_daum_analyze = News_analyze(news=news, portal='Daum', word_cloud=rep_daum)
+        form_daum_analyze = News_analyze(news=news, portal='Daum', rep_cmt=rep_daum)
+
     form_daum_analyze.save()
 
-    return 'rep_sentences_celery done.'
+    return print('rep_sentences_celery done.')
 
 @shared_task
 def mul(x, y):

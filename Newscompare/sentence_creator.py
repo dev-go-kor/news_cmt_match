@@ -25,6 +25,11 @@ def generate_sentence(cfdist, word, max_len=20):
         cfdtmp = cfdist[word]
         for clr in del_list:
             del cfdtmp[clr]
+
+        if cfdist[word] == {}:
+            end_sign = 0
+            break
+
         print(cfdtmp.items())
 
         choices, weights = zip(*cfdtmp.items())  # *는 unpank operator, cfdist[word].items()로 반환되는 dict를 묶어줌
